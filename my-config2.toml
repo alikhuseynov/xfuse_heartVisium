@@ -1,0 +1,45 @@
+[xfuse]
+network_depth = 6
+network_width = 16
+gene_regex = "^(?!RPS|RPL|MT-).*" # remove ribo and mito genes
+min_counts = 1
+
+[settings]
+cache_data = true
+data_workers = 8
+
+[expansion_strategy]
+type = "DropAndSplit"
+[expansion_strategy.DropAndSplit]
+max_metagenes = 50
+
+[optimization]
+batch_size = 3
+epochs = 30000
+learning_rate = 0.0003
+patch_size = 768
+
+[analyses]
+[analyses.analysis-gene_maps]
+type = "gene_maps"
+[analyses.analysis-gene_maps.options]
+gene_regex = "^(ABCC9+|ACE2+|ACTA2+|BSG+|CD14+|CD8A+|CDH5+|DCN+|FASN+|GPAM+|GSN+|IL7R+|MYH11+|MYH10+|MYH7+|MYL2+|MYL7+|NPPA+|NRP1+|PDGFRA+|PECAM1+|PPARD+|PTGIR+|RGS5+|TAGLN+|VWF+|PROX1+|TBX1+|PDPN)$"
+num_samples = 50
+genes_per_batch = 10
+predict_mean = true
+normalize = false
+mask_tissue = true
+scale = 1.0
+writer = "image"
+[analyses.analysis-metagenes]
+type = "metagenes"
+[analyses.analysis-metagenes.options]
+method = "pca"
+
+[slides]
+[slides.section1]
+data = "visium_heart_lv_processed/data.h5"
+[slides.section1.options]
+min_counts = 3000
+always_filter = []
+always_keep = [1]
